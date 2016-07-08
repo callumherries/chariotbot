@@ -28,38 +28,59 @@ controller.setupWebserver(process.env.PORT || 3000, function(err, webserver) {
     });
 });
 
-// var respondToUserInfo = function(user, foo) {
-//     console.log("Access token: " + process.env.FACEBOOK_PAGE_ACCESS_TOKEN);
-//     request.get('https://graph.facebook.com/v2.6/' + user + '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + process.env.FACEBOOK_PAGE_ACCESS_TOKEN, 
-//     function(err, res, body) {
-//             if (err) {
-//                 console.log(err);
-//             } else {
-//                 foo(JSON.parse(body));
-//             }
-//         });
-// }
+var setGetStartedButton = function() {
+    request.post("https://graph.facebook.com/v2.6/me/thread_settings?access_token=" +  process.env.FACEBOOK_PAGE_ACCESS_TOKEN, 
+    function(err, res, body) {
+        if (err) {
+            console.log(error);
+        } else {
+            console.log(response.statusCode, body);
+        }
+    }).form({
+        "setting_type":"call_to_actions",
+        "thread_state":"new_thread",
+        "call_to_actions":[
+            {
+            "payload":"GET_STARTED"
+            }
+        ]
+    });
+}
 
-// var configureWelcomeMessage = function() {
-//     request.post('https://graph.facebook.com/v2.6/239086409799535/thread_settings?access_token=' + process.env.FACEBOOK_PAGE_ACCESS_TOKEN, 
-//     function(error, response, body){
-//         if(error) {
-//             console.log(error);
-//         } else {
-//             console.log(response.statusCode, body);
-//         }
-//     }).form({
-//         "setting_type":"call_to_actions",
-//         "thread_state":"new_thread",
-//         "call_to_actions":[
-//             {
-//             "message":{
-//                 "text":"Hey. I'm a bot. They call me Norris. \n I've been trained to answer questions like, 'who is Barack Obama', and 'what is two times the circumference the earth'. So go on, ask me a question."
-//             }
-//             }
-//         ]
-//     });
-// }
+setGetStartedButton();
+
+var respondToUserInfo = function(user, foo) {
+    console.log("Access token: " + process.env.FACEBOOK_PAGE_ACCESS_TOKEN);
+    request.get('https://graph.facebook.com/v2.6/' + user + '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + process.env.FACEBOOK_PAGE_ACCESS_TOKEN, 
+    function(err, res, body) {
+            if (err) {
+                console.log(err);
+            } else {
+                foo(JSON.parse(body));
+            }
+        });
+}
+
+var configureWelcomeMessage = function() {
+    request.post('https://graph.facebook.com/v2.6/239086409799535/thread_settings?access_token=' + process.env.FACEBOOK_PAGE_ACCESS_TOKEN, 
+    function(error, response, body){
+        if(error) {
+            console.log(error);
+        } else {
+            console.log(response.statusCode, body);
+        }
+    }).form({
+        "setting_type":"call_to_actions",
+        "thread_state":"new_thread",
+        "call_to_actions":[
+            {
+            "message":{
+                "text":"Hey. I'm a bot. They call me Norris. \n I've been trained to answer questions like, 'who is Barack Obama', and 'what is two times the circumference the earth'. So go on, ask me a question."
+            }
+            }
+        ]
+    });
+}
 
 // configureWelcomeMessage();
 

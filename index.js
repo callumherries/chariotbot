@@ -142,23 +142,25 @@ controller.hears(["start"], 'message_received', function(bot, message) {
                 }
             ]
         }, function(response, convo) {
+            askCommuteOrigin(response, convo);
             // whoa, I got the postback payload as a response to my convo.ask!
             convo.next();
         });
     });
-});
 
-
-// START_QUESTIONS postback
-controller.hears(["START_QUESTIONS"], 'facebook_postback', function(bot, message) {
+// original handler for START_QUESTIONS postback
+// controller.hears(["START_QUESTIONS"], 'facebook_postback', function(bot, message) {
+//  but now it is this...
     
-    bot.startConversation(message, function(err, convo) {
-        convo.ask("Where do you commute from? (suburb, city)", function(response, convo) {
-            convo.say("Oh, cool");
-            askCommuteDestination(response, convo);
-            convo.next();
+    var askCommuteOrigin = function(response, convo) {
+        bot.startConversation(message, function(err, convo) {
+            convo.ask("Where do you commute from? (suburb, city)", function(response, convo) {
+                convo.say("Oh, cool");
+                askCommuteDestination(response, convo);
+                convo.next();
+            });
         });
-    });
+    }
     
     var askCommuteDestination = function(response, convo) {
         convo.ask("Where do you commute to? (suburb, city)", function(response, convo) {

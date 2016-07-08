@@ -331,7 +331,8 @@ controller.hears(["start"], 'message_received', function(bot, message) {
                 }
             ]
         }, function(response, convo) {
-            convo.say("We'd love it if you could tell your friends about us. Here's a link you can share on your Facebook timeline. https://www.messenger.com/t/631350073695737")
+            convo.say("We'd love it if you could tell your friends about us. Here's a link you can share on your Facebook timeline.");
+            convo.say("https://www.facebook.com/ChariotNZ/?fref=ts");
             convo.say("Cheers Callum!");
             convo.next();
         });

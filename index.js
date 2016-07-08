@@ -34,7 +34,7 @@ var setGetStartedButton = function() {
         if (err) {
             console.log(error);
         } else {
-            console.log(response.statusCode, body);
+            console.log(res.statusCode, body);
         }
     }).form({
         "setting_type":"call_to_actions",

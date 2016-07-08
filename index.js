@@ -130,7 +130,7 @@ controller.hears(["GET_STARTED"], 'facebook_postback', function(bot, message) {
 
 controller.hears(["start"], 'message_received', function(bot, message) {
     bot.startConversation(message, function(err, convo) {
-        convo.say({
+        convo.ask({
             "type":"template",
             "payload":{
                 "template_type":"button",
@@ -148,6 +148,9 @@ controller.hears(["start"], 'message_received', function(bot, message) {
                 }
                 ]
             }
+        }, function(response, convo) {
+            // whoa, I got the postback payload as a response to my convo.ask!
+            convo.next();
         });
     });
 });
@@ -236,7 +239,7 @@ controller.hears(["START_QUESTIONS"], 'facebook_postback', function(bot, message
         });
     }
     
-    var askOutboundTime = function(response, convo) {
+    var askReturnTime = function(response, convo) {
         convo.ask({
             "text": "What time do you leave work?",
             "quick_replies": [

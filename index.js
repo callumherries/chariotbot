@@ -130,6 +130,7 @@ controller.hears(["GET_STARTED"], 'facebook_postback', function(bot, message) {
 
 controller.hears(["start"], 'message_received', function(bot, message) {
     bot.startConversation(message, function(err, convo) {
+        convo.say("hello!");
         convo.ask({
             "type":"template",
             "payload":{

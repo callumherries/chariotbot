@@ -326,13 +326,13 @@ controller.hears(["start"], 'message_received', function(bot, message) {
             "quick_replies": [
                 {
                     "content_type":"text",
-                    "title":"What can I do to help?",
+                    "title": "How can I help?",
                     "payload":"5:00-5:30am"
                 }
             ]
         }, function(response, convo) {
             convo.say("We'd love it if you could tell your friends about us. Here's a link you can share on your Facebook timeline. https://www.messenger.com/t/631350073695737")
-            convo.say("Cheers Jhett!");
+            convo.say("Cheers Callum!");
             convo.next();
         });
     }

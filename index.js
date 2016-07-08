@@ -78,8 +78,6 @@ var SetThreadSettings = function() {
     });
 }
 
-setGetStartedButton();
-
 controller.hears(["GET_STARTED"], 'facebook_postback', function(bot, message) {
     respondToUserInfo(message.user, function(userInfo) {
         bot.startConversation(message, function(err, convo) {

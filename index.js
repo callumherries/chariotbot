@@ -130,8 +130,6 @@ controller.hears(["GET_STARTED"], 'facebook_postback', function(bot, message) {
 
 controller.hears(["start"], 'message_received', function(bot, message) {
     bot.startConversation(message, function(err, convo) {
-        convo.say("hello!");
-        
         convo.ask({
             "text": "Hey! We need to ask you a few questions about your commute before we can match you up with a carpool. Are you ready?",
             "quick_replies": [
@@ -163,7 +161,7 @@ controller.hears(["start"], 'message_received', function(bot, message) {
     }
     
     var askCommuteDestination = function(response, convo) {
-        convo.ask("Where do you commute to? (suburb, city)", function(response, convo) {
+        convo.ask("OK! Where do you commute to? (suburb, city)", function(response, convo) {
             convo.say("Oh, cool");
             askOutboundTime(response, convo);
             convo.next();
@@ -172,7 +170,7 @@ controller.hears(["start"], 'message_received', function(bot, message) {
     
     var askOutboundTime = function(response, convo) {
         convo.ask({
-            "text": "What time do you leave in the morning?",
+            "text": "Great! Now, select the time you usually leave in the morning.",
             "quick_replies": [
                 {
                     "content_type":"text",
@@ -223,6 +221,11 @@ controller.hears(["start"], 'message_received', function(bot, message) {
                     "content_type":"text",
                     "title":"9:30-10:00am",
                     "payload":"9:30-10:00am"
+                },
+                {
+                    "content_type":"text",
+                    "title":"Other",
+                    "payload":"9:30-10:00am"
                 }
                 
             ]
@@ -235,7 +238,7 @@ controller.hears(["start"], 'message_received', function(bot, message) {
     
     var askReturnTime = function(response, convo) {
         convo.ask({
-            "text": "What time do you leave work?",
+            "text": "Now, set the time you usually return from work.",
             "quick_replies": [
                 {
                     "content_type":"text",
@@ -287,30 +290,63 @@ controller.hears(["start"], 'message_received', function(bot, message) {
                     "title":"8:30-9:00pm",
                     "payload":":30-6:00am"
                 },
+                {
+                    "content_type":"text",
+                    "title":"Other",
+                    "payload":":30-6:00am"
+                }
             ]
         }, function(response, convo) {
             convo.say("Oh, cool");
-            ask(response, convo);
+            askTransport(response, convo);
             convo.next();
         });
     }
     
-    var askReturnTime = function(reponse, convo) {
+    var askTransport = function(response, convo) {
         convo.ask({
-            "text": "How do you currently drive to work?",
+            "text": "OK. Last question: how do you usually get to work?",
             "quick_replies": [
                 {
                     "content_type":"text",
-                    "title":"Yes",
+                    "title":"Car",
                     "payload":"5:00-5:30am"
                 },
                 {
                     "content_type":"text",
-                    "title":"No",
+                    "title":"Bus, Train, Ferry",
+                    "payload":"5:30-6:00am"
+                },
+                {
+                    "content_type":"Other",
+                    "title":"Other",
                     "payload":"5:30-6:00am"
                 }
             ]
-        })
+        }, function(response, convo) {
+            convo.say("Oh, cool");
+            done(response, convo);
+            convo.next();
+        });
+    }
+    
+    
+    var done = function(response, convo) {
+        convo.say("Wooo! You're all done. We'll message you as soon as we think we've found a suitable carpool for you.")
+        convo.ask({
+            "text": "In the meantime, we want to let everyone around New Zealand know we're doing this. How about showing your support by helping us spread the word?",
+            "quick_replies": [
+                {
+                    "content_type":"Sure, what can I do to help?",
+                    "title":"Car",
+                    "payload":"5:00-5:30am"
+                }
+            ]
+        }, function(response, convo) {
+            convo.say("Awesome! We'd love it if you could tell your friends about us. Here's a link you can share on your Facebook timeline. https://www.messenger.com/t/631350073695737")
+            convo.say("Cheers!");
+            convo.next();
+        });
     }
 });
 

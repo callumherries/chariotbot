@@ -109,24 +109,42 @@ var respondToUserInfo = function(user, foo) {
 SetThreadSettings();
 
 controller.hears(["GET_STARTED"], 'facebook_postback', function(bot, message) {
-    respondToUserInfo(message.user, function(userInfo) {
-        bot.startConversation(message, function(err, convo) {
-            convo.say({
-                "text":"Are you ready?",
-                "quick_replies":[
-                {
-                    "content_type":"text",
-                    "title":"Yeah!",
-                    "payload":"START_QUESTIONS"
-                },
-                {
-                    "content_type":"text",
-                    "title":"View Terms of Use",
-                    "payload":"TERMS_OF_USE"
-                }
-                ]
-            })
-        });
+    bot.startConversation(message, function(err, convo) {
+        convo.say({
+            "text":"Are you ready?",
+            "quick_replies":[
+            {
+                "content_type":"text",
+                "title":"Yeah!",
+                "payload":"START_QUESTIONS"
+            },
+            {
+                "content_type":"text",
+                "title":"View Terms of Use",
+                "payload":"TERMS_OF_USE"
+            }
+            ]
+        })
+    });
+});
+
+controller.hears(["start"], 'message_received', function(bot, message) {
+    bot.startConversation(message, function(err, convo) {
+        convo.say({
+            "text":"Are you ready?",
+            "quick_replies":[
+            {
+                "content_type":"text",
+                "title":"Yeah!",
+                "payload":"START_QUESTIONS"
+            },
+            {
+                "content_type":"text",
+                "title":"View Terms of Use",
+                "payload":"TERMS_OF_USE"
+            }
+            ]
+        })
     });
 });
 

@@ -41,12 +41,12 @@ var SetThreadSettings = function() {
     }
     
     // Greeting Text
-    PostThreadSettings({
-        "setting_type":"greeting",
-        "greeting":{
-            "text":"Chariot is here to help!"
-        }
-    });
+    // PostThreadSettings({
+    //     "setting_type":"greeting",
+    //     "greeting":{
+    //         "text":"Chariot is here to help!"
+    //     }
+    // });
     
     // Get Started Button
     PostThreadSettings({
@@ -143,7 +143,6 @@ controller.hears([".*"], 'message_received', function(bot, message) {
     
     bot.startConversation(message, function(err, convo) {
         convo.ask({
-            "text": "Before we can match you up with a carpool, we need to ask you a few questions. Are you ready?",
             "quick_replies": [
                 {
                     "content_type":"text",

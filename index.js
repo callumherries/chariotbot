@@ -148,6 +148,50 @@ controller.hears(["start"], 'message_received', function(bot, message) {
     });
 });
 
+// START_QUESTIONS postback
+controller.hears(["START_QUESTIONS"], 'facebook_postback', function(bot, message) {
+    bot.startConversation(message, function(err, convo) {
+        convo.ask({
+            "text":"Where do you commute from?",
+            "quick_replies":[
+            {
+                "content_type":"text",
+                "title":"I don't Commute!",
+                "payload":"START_QUESTIONS"
+            },
+            {
+                "content_type":"text",
+                "title":"I hate commuting",
+                "payload":"TERMS_OF_USE"
+            }
+            ]
+        }, function(response, convo) {
+            convo.say("Oh, cool");
+            convo.next();
+        });
+    });
+});
+
+var replyToPostback = function(postbackStr, reply) {
+    controller.hears([postbackStr], 'facebook_postback', function(bot, message) {
+        bot.startConversation(message, function(err, convo) {
+            convo.say(reply);
+        });
+    });
+}
+
+// replyToPostback("START_QUESTIONS", "Where do you commute from? (suburb, city)");
+
+// replyToPostback("WORK_ADDRESS", "Where do you commute to? (suburb, city)");
+
+// replyToPostback("");
+
+// ASK QUESTION
+
+
+// TERMS_OF_USE postback
+
+
 
 
 // configureWelcomeMessage();

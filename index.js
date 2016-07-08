@@ -78,15 +78,21 @@ var SetThreadSettings = function() {
     });
 }
 
-controller.hears(["GET_STARTED"], 'facebook_postback', function(bot, message) {
-    respondToUserInfo(message.user, function(userInfo) {
-        bot.startConversation(message, function(err, convo) {
-            console.log(JSON.stringify(userInfo));
-            convo.say("Your name is " + userInfo.first_name + ".");
-
-        });
-    });
-});
+// var sendAPI = function(userId, contents) {
+//     request.post("https://graph.facebook.com/v2.6/me/messages?access_token=" +  process.env.FACEBOOK_PAGE_ACCESS_TOKEN, 
+//         function(err, res, body) {
+//             if (err) {
+//                 console.log(error);
+//             } else {
+//                 console.log(res.statusCode, body);
+//             }
+//         }).form({
+//             "recipient":{
+//                 "id":userId
+//             },
+            //    etc
+//         });
+// }
 
 var respondToUserInfo = function(user, foo) {
     console.log("Access token: " + process.env.FACEBOOK_PAGE_ACCESS_TOKEN);
@@ -99,6 +105,32 @@ var respondToUserInfo = function(user, foo) {
             }
         });
 }
+
+SetThreadSettings();
+
+controller.hears(["GET_STARTED"], 'facebook_postback', function(bot, message) {
+    respondToUserInfo(message.user, function(userInfo) {
+        bot.startConversation(message, function(err, convo) {
+            convo.say({
+                "text":"Are you ready?",
+                "quick_replies":[
+                {
+                    "content_type":"text",
+                    "title":"Yeah!",
+                    "payload":"START_QUESTIONS"
+                },
+                {
+                    "content_type":"text",
+                    "title":"View Terms of Use",
+                    "payload":"TERMS_OF_USE"
+                }
+                ]
+            })
+        });
+    });
+});
+
+
 
 // configureWelcomeMessage();
 

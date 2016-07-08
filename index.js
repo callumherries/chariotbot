@@ -49,6 +49,16 @@ var setGetStartedButton = function() {
 
 setGetStartedButton();
 
+controller.hears(["GET_STARTED"], 'facebook_postback', function(bot, message) {
+    respondToUserInfo(message.user, function(userInfo) {
+        bot.startConversation(message, function(err, convo) {
+            console.log(JSON.stringify(userInfo));
+            convo.say("Your name is " + userInfo.first_name + ".");
+
+        });
+    });
+});
+
 var respondToUserInfo = function(user, foo) {
     console.log("Access token: " + process.env.FACEBOOK_PAGE_ACCESS_TOKEN);
     request.get('https://graph.facebook.com/v2.6/' + user + '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + process.env.FACEBOOK_PAGE_ACCESS_TOKEN, 

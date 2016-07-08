@@ -128,7 +128,19 @@ controller.hears(["GET_STARTED"], 'facebook_postback', function(bot, message) {
     });
 });
 
-controller.hears(["start"], 'message_received', function(bot, message) {
+controller.hears([".*"], 'message_received', function(bot, message) {
+    var firstName;
+    
+    request.get('https://graph.facebook.com/v2.6/' + message.user + '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + process.env.FACEBOOK_PAGE_ACCESS_TOKEN, 
+    function(err, res, body) {
+            if (err) {
+                console.log(err);
+            } else {
+                firstName = JSON.parse(body).first_name;
+                console.log(firstName);
+            }
+        });
+    
     bot.startConversation(message, function(err, convo) {
         convo.ask({
             "text": "Before we can match you up with a carpool, we need to ask you a few questions. Are you ready?",
@@ -331,9 +343,9 @@ controller.hears(["start"], 'message_received', function(bot, message) {
                 }
             ]
         }, function(response, convo) {
-            convo.say("We'd love it if you could tell your friends about us. Here's a link you can share on your Facebook timeline.");
+            convo.say("We'd love it if you could tell your friends about us. Here's a link you to our Facebook page you can share with others.");
             convo.say("https://www.facebook.com/ChariotNZ/?fref=ts");
-            convo.say("Cheers Callum!");
+            convo.say("Cheers " + firstName + "!");
             convo.next();
         });
     }

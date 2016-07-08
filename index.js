@@ -131,45 +131,105 @@ controller.hears(["GET_STARTED"], 'facebook_postback', function(bot, message) {
 controller.hears(["start"], 'message_received', function(bot, message) {
     bot.startConversation(message, function(err, convo) {
         convo.say({
-            "text":"Are you ready?",
-            "quick_replies":[
-            {
-                "content_type":"text",
-                "title":"Yeah!",
-                "payload":"START_QUESTIONS"
-            },
-            {
-                "content_type":"text",
-                "title":"View Terms of Use",
-                "payload":"TERMS_OF_USE"
+            "type":"template",
+            "payload":{
+                "template_type":"button",
+                "text":"OK! We need to ask you a few questions about your commute before we can match you up with a carpool. Are you ready?",
+                "buttons":[
+                {
+                    "type":"postback",
+                    "title":"Yeah!",
+                    "payload":"START_QUESTIONS"
+                },
+                {
+                    "type":"web_url",
+                    "url":"https://petersapparel.parseapp.com",
+                    "title":"Terms of Use"
+                }
+                ]
             }
-            ]
-        })
+        });
     });
 });
 
+
 // START_QUESTIONS postback
 controller.hears(["START_QUESTIONS"], 'facebook_postback', function(bot, message) {
+    
     bot.startConversation(message, function(err, convo) {
-        convo.ask({
-            "text":"Where do you commute from?",
-            "quick_replies":[
-            {
-                "content_type":"text",
-                "title":"I don't Commute!",
-                "payload":"START_QUESTIONS"
-            },
-            {
-                "content_type":"text",
-                "title":"I hate commuting",
-                "payload":"TERMS_OF_USE"
-            }
-            ]
-        }, function(response, convo) {
+        convo.ask("Where do you commute from? (suburb, city)", function(response, convo) {
             convo.say("Oh, cool");
+            askCommuteDestination(response, convo);
             convo.next();
         });
     });
+    
+    
+    var askCommuteDestination = function(response, convo) {
+        convo.ask("Where do you commute to? (suburb, city)", function(response, convo) {
+            convo.say("Oh, cool");
+            askOutboundTime(response, convo);
+            convo.next();
+        });
+    }
+    
+    var askOutboundTime = function(response, convo) {
+        convo.ask({
+            "text": "What time do you leave in the morning?",
+            "quick_replies": [
+                {
+                    "content_type":"text",
+                    "title":"5:00-5:30am",
+                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
+                },
+                {
+                    "content_type":"text",
+                    "title":"5:30-6:00am",
+                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                },
+                {
+                    "content_type":"text",
+                    "title":"6:00-6:30am",
+                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                },
+                {
+                    "content_type":"text",
+                    "title":"6:30-7:00am",
+                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                },
+                {
+                    "content_type":"text",
+                    "title":"7:00-7:30am",
+                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                },
+                {
+                    "content_type":"text",
+                    "title":"7:30-8:00am",
+                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                },
+                {
+                    "content_type":"text",
+                    "title":"8:00-8:30am",
+                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                },
+                {
+                    "content_type":"text",
+                    "title":"8:30-9:00am",
+                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                },
+                {
+                    "content_type":"text",
+                    "title":"9:00-9:30am",
+                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                }
+                
+            ]
+        }, function(response, convo) {
+            convo.say("Oh, cool");
+            askOutboundTime(response, convo);
+            convo.next();
+        });
+    }
 });
 
 var replyToPostback = function(postbackStr, reply) {

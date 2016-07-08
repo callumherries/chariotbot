@@ -131,43 +131,14 @@ controller.hears(["GET_STARTED"], 'facebook_postback', function(bot, message) {
 controller.hears(["start"], 'message_received', function(bot, message) {
     bot.startConversation(message, function(err, convo) {
         convo.say("hello!");
-        convo.say({
-            "type":"template",
-            "payload":{
-                "template_type":"button",
-                "text":"OK! We need to ask you a few questions about your commute before we can match you up with a carpool. Are you ready?",
-                "buttons":[
-                {
-                    "type":"postback",
-                    "title":"Yeah!",
-                    "payload":"START_QUESTIONS"
-                },
-                {
-                    "type":"web_url",
-                    "url":"https://petersapparel.parseapp.com",
-                    "title":"Terms of Use"
-                }
-                ]
-        }});
         
         convo.ask({
-            "type":"template",
-            "payload":{
-                "template_type":"button",
-                "text":"OK! We need to ask you a few questions about your commute before we can match you up with a carpool. Are you ready?",
-                "buttons":[
-                {
-                    "type":"postback",
+            "text": "Hey! We need to ask you a few questions about your commute before we can match you up with a carpool. Are you ready?",
+            "quick_replies": {
+                    "content_type":"text",
                     "title":"Yeah!",
                     "payload":"START_QUESTIONS"
                 },
-                {
-                    "type":"web_url",
-                    "url":"https://petersapparel.parseapp.com",
-                    "title":"Terms of Use"
-                }
-                ]
-            }
         }, function(response, convo) {
             // whoa, I got the postback payload as a response to my convo.ask!
             convo.next();

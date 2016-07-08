@@ -320,13 +320,13 @@ controller.hears(["start"], 'message_received', function(bot, message) {
     
     
     var done = function(response, convo) {
-        convo.say("Wooo! You're all done. We'll message you as soon as we think we've found a suitable carpool for you.")
+        convo.say("Wooo! You're all done. We'll message you as soon as we think we've found a suitable carpool for you.");
         convo.ask({
             "text": "In the meantime, we want to let everyone around New Zealand know we're doing this. How about showing your support by helping us spread the word?",
             "quick_replies": [
                 {
-                    "content_type":"Sure, what can I do to help?",
-                    "title":"Car",
+                    "content_type":"text",
+                    "title":"Sure, what can I do to help?",
                     "payload":"5:00-5:30am"
                 }
             ]

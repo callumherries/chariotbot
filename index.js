@@ -152,7 +152,7 @@ controller.hears(["start"], 'message_received', function(bot, message) {
     
     var askCommuteOrigin = function(response, convo) {
         bot.startConversation(message, function(err, convo) {
-            convo.ask("👍 Where do you commute from? (suburb, city)", function(response, convo) {
+            convo.ask("Where do you commute from? (suburb, city)", function(response, convo) {
                 askCommuteDestination(response, convo);
                 convo.next();
             });
@@ -160,15 +160,17 @@ controller.hears(["start"], 'message_received', function(bot, message) {
     }
     
     var askCommuteDestination = function(response, convo) {
-        convo.ask("👍 Where do you commute to? (suburb, city)", function(response, convo) {
+        convo.say("👍");
+        convo.ask("Where do you commute to? (suburb, city)", function(response, convo) {
             askOutboundTime(response, convo);
             convo.next();
         });
     }
     
     var askOutboundTime = function(response, convo) {
+        convo.say("👍");
         convo.ask({
-            "text": "👍 Select the time you usually leave in the morning.",
+            "text": "Select the time you usually leave in the morning.",
             "quick_replies": [
                 {
                     "content_type":"text",
@@ -222,15 +224,15 @@ controller.hears(["start"], 'message_received', function(bot, message) {
                 }
             ]
         }, function(response, convo) {
-            convo.say("Oh, cool");
             askReturnTime(response, convo);
             convo.next();
         });
     }
     
     var askReturnTime = function(response, convo) {
+        convo.say("👍");
         convo.ask({
-            "text": "👍 Select the time you usually return from work.",
+            "text": "Select the time you usually return from work.",
             "quick_replies": [
                 {
                     "content_type":"text",
@@ -290,8 +292,9 @@ controller.hears(["start"], 'message_received', function(bot, message) {
     }
     
     var askTransport = function(response, convo) {
+        convo.say("👍");
         convo.ask({
-            "text": "👍 Last question: how do you usually get to work?",
+            "text": "Last question: how do you usually get to work?",
             "quick_replies": [
                 {
                     "content_type":"text",

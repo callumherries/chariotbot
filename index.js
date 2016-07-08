@@ -131,7 +131,7 @@ controller.hears(["GET_STARTED"], 'facebook_postback', function(bot, message) {
 controller.hears(["start"], 'message_received', function(bot, message) {
     bot.startConversation(message, function(err, convo) {
         convo.ask({
-            "text": "Hey! Before we can match you up with a carpool, we need to ask you a few questions. Are you ready?",
+            "text": "Before we can match you up with a carpool, we need to ask you a few questions. Are you ready?",
             "quick_replies": [
                 {
                     "content_type":"text",
@@ -322,16 +322,16 @@ controller.hears(["start"], 'message_received', function(bot, message) {
     var done = function(response, convo) {
         convo.say("Wooo! You're all done. We'll message you as soon as we think we've found a suitable carpool for you.");
         convo.ask({
-            "text": "In the meantime, we want to let everyone around New Zealand know we're doing this. How about showing your support by helping us spread the word?",
+            "text": "In the meantime, we really need help from kiwis like you to spread the word.",
             "quick_replies": [
                 {
                     "content_type":"text",
-                    "title":"Sure, what can I do to help?",
+                    "title":"What can I do to help?",
                     "payload":"5:00-5:30am"
                 }
             ]
         }, function(response, convo) {
-            convo.say("Awesome. We'd love it if you could tell your friends about us. Here's a link you can share on your Facebook timeline. https://www.messenger.com/t/631350073695737")
+            convo.say("We'd love it if you could tell your friends about us. Here's a link you can share on your Facebook timeline. https://www.messenger.com/t/631350073695737")
             convo.say("Cheers Jhett!");
             convo.next();
         });

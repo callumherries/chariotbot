@@ -160,7 +160,7 @@ controller.hears(["start"], 'message_received', function(bot, message) {
     }
     
     var askCommuteDestination = function(response, convo) {
-        convo.say("👍");
+        convo.say("(y)");
         convo.ask("Where do you commute to? (suburb, city)", function(response, convo) {
             askOutboundTime(response, convo);
             convo.next();
@@ -168,7 +168,7 @@ controller.hears(["start"], 'message_received', function(bot, message) {
     }
     
     var askOutboundTime = function(response, convo) {
-        convo.say("👍");
+        convo.say("(y)");
         convo.ask({
             "text": "Select the time you usually leave in the morning.",
             "quick_replies": [
@@ -230,7 +230,7 @@ controller.hears(["start"], 'message_received', function(bot, message) {
     }
     
     var askReturnTime = function(response, convo) {
-        convo.say("👍");
+        convo.say("(y)");
         convo.ask({
             "text": "Select the time you usually return from work.",
             "quick_replies": [
@@ -292,7 +292,7 @@ controller.hears(["start"], 'message_received', function(bot, message) {
     }
     
     var askTransport = function(response, convo) {
-        convo.say("👍");
+        convo.say("(y)");
         convo.ask({
             "text": "Last question: how do you usually get to work?",
             "quick_replies": [
@@ -307,7 +307,7 @@ controller.hears(["start"], 'message_received', function(bot, message) {
                     "payload":"5:30-6:00am"
                 },
                 {
-                    "content_type":"Other",
+                    "content_type":"text",
                     "title":"Other",
                     "payload":"5:30-6:00am"
                 }
@@ -331,8 +331,8 @@ controller.hears(["start"], 'message_received', function(bot, message) {
                 }
             ]
         }, function(response, convo) {
-            convo.say("Awesome! We'd love it if you could tell your friends about us. Here's a link you can share on your Facebook timeline. https://www.messenger.com/t/631350073695737")
-            convo.say("Cheers!");
+            convo.say("Awesome. We'd love it if you could tell your friends about us. Here's a link you can share on your Facebook timeline. https://www.messenger.com/t/631350073695737")
+            convo.say("Cheers Jhett!");
             convo.next();
         });
     }

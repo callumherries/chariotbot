@@ -131,6 +131,25 @@ controller.hears(["GET_STARTED"], 'facebook_postback', function(bot, message) {
 controller.hears(["start"], 'message_received', function(bot, message) {
     bot.startConversation(message, function(err, convo) {
         convo.say("hello!");
+        convo.say({
+            "type":"template",
+            "payload":{
+                "template_type":"button",
+                "text":"OK! We need to ask you a few questions about your commute before we can match you up with a carpool. Are you ready?",
+                "buttons":[
+                {
+                    "type":"postback",
+                    "title":"Yeah!",
+                    "payload":"START_QUESTIONS"
+                },
+                {
+                    "type":"web_url",
+                    "url":"https://petersapparel.parseapp.com",
+                    "title":"Terms of Use"
+                }
+                ]
+        }});
+        
         convo.ask({
             "type":"template",
             "payload":{
@@ -167,7 +186,6 @@ controller.hears(["START_QUESTIONS"], 'facebook_postback', function(bot, message
             convo.next();
         });
     });
-    
     
     var askCommuteDestination = function(response, convo) {
         convo.ask("Where do you commute to? (suburb, city)", function(response, convo) {
@@ -297,9 +315,27 @@ controller.hears(["START_QUESTIONS"], 'facebook_postback', function(bot, message
             ]
         }, function(response, convo) {
             convo.say("Oh, cool");
-            askReturnTime(response, convo);
+            ask(response, convo);
             convo.next();
         });
+    }
+    
+    var askReturnTime = function(reponse, convo) {
+        convo.ask({
+            "text": "How do you currently drive to work?",
+            "quick_replies": [
+                {
+                    "content_type":"text",
+                    "title":"Yes",
+                    "payload":"5:00-5:30am"
+                },
+                {
+                    "content_type":"text",
+                    "title":"No",
+                    "payload":"5:30-6:00am"
+                }
+            ]
+        })
     }
 });
 

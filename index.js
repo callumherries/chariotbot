@@ -142,7 +142,9 @@ controller.hears([".*"], 'message_received', function(bot, message) {
         });
     
     bot.startConversation(message, function(err, convo) {
+        convo.say("Chariot is helping set up carpools for commuters all over New Zealand. Tell us about your commute, and we'll notify you if we think we can set one up for you.")
         convo.ask({
+            "text": "Before we can match you up with a carpool, we need to ask you a few questions. Are you ready?",
             "quick_replies": [
                 {
                     "content_type":"text",

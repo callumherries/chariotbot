@@ -134,11 +134,13 @@ controller.hears(["start"], 'message_received', function(bot, message) {
         
         convo.ask({
             "text": "Hey! We need to ask you a few questions about your commute before we can match you up with a carpool. Are you ready?",
-            "quick_replies": {
+            "quick_replies": [
+                {
                     "content_type":"text",
                     "title":"Yeah!",
                     "payload":"START_QUESTIONS"
-                },
+                }
+            ]
         }, function(response, convo) {
             // whoa, I got the postback payload as a response to my convo.ask!
             convo.next();

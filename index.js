@@ -180,53 +180,120 @@ controller.hears(["START_QUESTIONS"], 'facebook_postback', function(bot, message
                 {
                     "content_type":"text",
                     "title":"5:00-5:30am",
-                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
+                    "payload":"5:00-5:30am"
                 },
                 {
                     "content_type":"text",
                     "title":"5:30-6:00am",
-                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                    "payload":"5:30-6:00am"
                 },
                 {
                     "content_type":"text",
                     "title":"6:00-6:30am",
-                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                    "payload":"6:00-6:30am"
                 },
                 {
                     "content_type":"text",
                     "title":"6:30-7:00am",
-                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                    "payload":"6:30-7:00am"
                 },
                 {
                     "content_type":"text",
                     "title":"7:00-7:30am",
-                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                    "payload":"7:00-7:30am"
                 },
                 {
                     "content_type":"text",
                     "title":"7:30-8:00am",
-                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                    "payload":"7:30-8:00am"
                 },
                 {
                     "content_type":"text",
                     "title":"8:00-8:30am",
-                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                    "payload":"8:00-8:30am"
                 },
                 {
                     "content_type":"text",
                     "title":"8:30-9:00am",
-                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                    "payload":"8:30-9:00am"
                 },
                 {
                     "content_type":"text",
                     "title":"9:00-9:30am",
-                    "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                    "payload":"9:00-9:30am"
+                },
+                {
+                    "content_type":"text",
+                    "title":"9:30-10:00am",
+                    "payload":"9:30-10:00am"
                 }
                 
             ]
         }, function(response, convo) {
             convo.say("Oh, cool");
-            askOutboundTime(response, convo);
+            askReturnTime(response, convo);
+            convo.next();
+        });
+    }
+    
+    var askOutboundTime = function(response, convo) {
+        convo.ask({
+            "text": "What time do you leave work?",
+            "quick_replies": [
+                {
+                    "content_type":"text",
+                    "title":"3:00-3:30pm",
+                    "payload":"5:00-5:30am"
+                },
+                {
+                    "content_type":"text",
+                    "title":"3:30-4:00pm",
+                    "payload":":30-6:00am"
+                },
+                {
+                    "content_type":"text",
+                    "title":"4:00-4:30pm",
+                    "payload":"5:00-5:30am"
+                },
+                {
+                    "content_type":"text",
+                    "title":"4:30-5:00pm",
+                    "payload":":30-6:00am"
+                },
+                {
+                    "content_type":"text",
+                    "title":"5:00-5:30pm",
+                    "payload":"5:00-5:30am"
+                },
+                {
+                    "content_type":"text",
+                    "title":"5:30-6:00pm",
+                    "payload":":30-6:00am"
+                },
+                {
+                    "content_type":"text",
+                    "title":"6:00-6:30pm",
+                    "payload":"5:00-5:30am"
+                },
+                {
+                    "content_type":"text",
+                    "title":"6:30-7:00pm",
+                    "payload":":30-6:00am"
+                },
+                {
+                    "content_type":"text",
+                    "title":"7:00-7:30pm",
+                    "payload":"5:00-5:30am"
+                },
+                {
+                    "content_type":"text",
+                    "title":"8:30-9:00pm",
+                    "payload":":30-6:00am"
+                },
+            ]
+        }, function(response, convo) {
+            convo.say("Oh, cool");
+            askReturnTime(response, convo);
             convo.next();
         });
     }

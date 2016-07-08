@@ -131,7 +131,7 @@ controller.hears(["GET_STARTED"], 'facebook_postback', function(bot, message) {
 controller.hears(["start"], 'message_received', function(bot, message) {
     bot.startConversation(message, function(err, convo) {
         convo.ask({
-            "text": "Hey! We need to ask you a few questions about your commute before we can match you up with a carpool. Are you ready?",
+            "text": "Hey! Before we can match you up with a carpool, we need to ask you a few questions. Are you ready?",
             "quick_replies": [
                 {
                     "content_type":"text",
@@ -152,8 +152,7 @@ controller.hears(["start"], 'message_received', function(bot, message) {
     
     var askCommuteOrigin = function(response, convo) {
         bot.startConversation(message, function(err, convo) {
-            convo.ask("Where do you commute from? (suburb, city)", function(response, convo) {
-                convo.say("Oh, cool");
+            convo.ask("👍 Where do you commute from? (suburb, city)", function(response, convo) {
                 askCommuteDestination(response, convo);
                 convo.next();
             });
@@ -161,8 +160,7 @@ controller.hears(["start"], 'message_received', function(bot, message) {
     }
     
     var askCommuteDestination = function(response, convo) {
-        convo.ask("OK! Where do you commute to? (suburb, city)", function(response, convo) {
-            convo.say("Oh, cool");
+        convo.ask("👍 Where do you commute to? (suburb, city)", function(response, convo) {
             askOutboundTime(response, convo);
             convo.next();
         });
@@ -170,7 +168,7 @@ controller.hears(["start"], 'message_received', function(bot, message) {
     
     var askOutboundTime = function(response, convo) {
         convo.ask({
-            "text": "Great! Now, select the time you usually leave in the morning.",
+            "text": "👍 Select the time you usually leave in the morning.",
             "quick_replies": [
                 {
                     "content_type":"text",
@@ -219,15 +217,9 @@ controller.hears(["start"], 'message_received', function(bot, message) {
                 },
                 {
                     "content_type":"text",
-                    "title":"9:30-10:00am",
-                    "payload":"9:30-10:00am"
-                },
-                {
-                    "content_type":"text",
                     "title":"Other",
                     "payload":"9:30-10:00am"
                 }
-                
             ]
         }, function(response, convo) {
             convo.say("Oh, cool");
@@ -238,7 +230,7 @@ controller.hears(["start"], 'message_received', function(bot, message) {
     
     var askReturnTime = function(response, convo) {
         convo.ask({
-            "text": "Now, set the time you usually return from work.",
+            "text": "👍 Select the time you usually return from work.",
             "quick_replies": [
                 {
                     "content_type":"text",
@@ -287,17 +279,11 @@ controller.hears(["start"], 'message_received', function(bot, message) {
                 },
                 {
                     "content_type":"text",
-                    "title":"8:30-9:00pm",
-                    "payload":":30-6:00am"
-                },
-                {
-                    "content_type":"text",
                     "title":"Other",
                     "payload":":30-6:00am"
                 }
             ]
         }, function(response, convo) {
-            convo.say("Oh, cool");
             askTransport(response, convo);
             convo.next();
         });
@@ -305,7 +291,7 @@ controller.hears(["start"], 'message_received', function(bot, message) {
     
     var askTransport = function(response, convo) {
         convo.ask({
-            "text": "OK. Last question: how do you usually get to work?",
+            "text": "👍 Last question: how do you usually get to work?",
             "quick_replies": [
                 {
                     "content_type":"text",
@@ -324,7 +310,6 @@ controller.hears(["start"], 'message_received', function(bot, message) {
                 }
             ]
         }, function(response, convo) {
-            convo.say("Oh, cool");
             done(response, convo);
             convo.next();
         });

@@ -111,6 +111,22 @@ SetThreadSettings();
 controller.hears(["GET_STARTED"], 'facebook_postback', function(bot, message) {
     bot.startConversation(message, function(err, convo) {
         convo.say({
+            "text":"Are you ready for a good night out?",
+            "quick_replies":[
+            {
+                "content_type":"text",
+                "title":"Fuck yeah!",
+                "payload":"START_QUESTIONS"
+            }
+            ]
+        })
+    });
+});
+
+
+controller.hears(["GET_STARTED"], 'facebook_postback', function(bot, message) {
+    bot.startConversation(message, function(err, convo) {
+        convo.say({
             "text":"Are you ready?",
             "quick_replies":[
             {
@@ -130,6 +146,14 @@ controller.hears(["GET_STARTED"], 'facebook_postback', function(bot, message) {
 
 controller.hears([".*"], 'message_received', function(bot, message) {
     var firstName;
+
+
+    // to delete
+    bot.startConversation(message, function(err, convo) {
+        convo.say({
+            "text":"Cunt."
+        })
+    });
     
     request.get('https://graph.facebook.com/v2.6/' + message.user + '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + process.env.FACEBOOK_PAGE_ACCESS_TOKEN, 
     function(err, res, body) {
@@ -141,28 +165,30 @@ controller.hears([".*"], 'message_received', function(bot, message) {
             }
         });
     
-    bot.startConversation(message, function(err, convo) {
-        convo.say("Chariot is helping set up carpools for commuters all over New Zealand. Tell us about your commute, and we'll notify you if we think we can set one up for you.")
-        convo.ask({
-            "text": "Before we can match you up with a carpool, we need to ask you a few questions. Are you ready?",
-            "quick_replies": [
-                {
-                    "content_type":"text",
-                    "title":"Yeah!",
-                    "payload":"START_QUESTIONS"
-                }
-            ]
-        }, function(response, convo) {
-            askCommuteOrigin(response, convo);
-            // whoa, I got the postback payload as a response to my convo.ask!
-            convo.next();
-        });
-    });
+    // bot.startConversation(message, function(err, convo) {
+    //     convo.say("Chariot is helping set up carpools for commuters all over New Zealand. Tell us about your commute, and we'll notify you if we think we can set one up for you.")
+    //     convo.ask({
+    //         "text": "Before we can match you up with a carpool, we need to ask you a few questions. Are you ready?",
+    //         "quick_replies": [
+    //             {
+    //                 "content_type":"text",
+    //                 "title":"Yeah!",
+    //                 "payload":"START_QUESTIONS"
+    //             }
+    //         ]
+    //     }, function(response, convo) {
+    //         askCommuteOrigin(response, convo);
+    //         // whoa, I got the postback payload as a response to my convo.ask!
+    //         convo.next();
+    //     });
+    // });
 
 // original handler for START_QUESTIONS postback
 // controller.hears(["START_QUESTIONS"], 'facebook_postback', function(bot, message) {
 //  but now it is this...
+
     
+
     var askCommuteOrigin = function(response, convo) {
         bot.startConversation(message, function(err, convo) {
             convo.ask("Where do you commute from? (suburb, city)", function(response, convo) {
